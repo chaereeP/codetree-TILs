@@ -21,15 +21,30 @@ def rot_graph(graph, tar, deg):
         graph[tar[0]+dx[i]][tar[1]+dy[i]] = data_arr[ (i+id)%8]
     return graph
 
+global idx = 0
+visited = [[0]*5 for _ in range(5)]
 # dfs 유물조각 개수 확인
-def dfs(x,y, idx, num, graph):
+def dfs(x,y, visited):
     # 인덱스 넘어가면 실패
     if x <0 or y<0 or x >=5 or y>=5:
-        return idx
+        return False
     # 같은지 확인
-    if graph[x][y] == num and not visited[x][y]:
+    if not visited[x][y]:
+        visited[x][y]= True
+        global idx
         idx +=1
-        dfs(x-1, y, idx, num, graph)
-        dfs(x, y-1, idx, num, graph)
-        dfs(x+1, y, idx, num, graph)
-        dfs(x, y+1, idx, num, graph)
+        if graph[x-1][y] == graph[x][y]:
+            dfs(x-1, y, visited)
+        if graph[x][y-1] == graph[x][y]:
+            dfs(x, y-1, visited)
+        if graph[x+1][y] == graph[x][y]:
+            dfs(x+1, y, visited)
+        if graph[x][y+1] == graph[x][y]:
+            dfs(x, y+1, visited)
+    return False
+
+for i in range(5):
+    for j in range(5):
+        global idx
+        idx = 0
+        dfs(i,j, visited)
