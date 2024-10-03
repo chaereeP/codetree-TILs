@@ -109,5 +109,4 @@ def block_move(c_, d):
 score = 0
 for kk in range(k):
     score += block_move(arr[kk][0]-1,arr[kk][1])
-    print(score)
 print(score)
