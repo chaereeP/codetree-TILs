@@ -43,7 +43,7 @@ def get_connected_arr(stacked_arr, connected_arr):
         return False
     for kk in range(len(stacked_arr)-1):
             if connected(stacked_arr[-1][0],stacked_arr[-1][1],exit_arr[-1],stacked_arr[kk][0],stacked_arr[kk][1]):
-                connected_arr[-1].append(kk)
+                connected_arr[len(stacked_arr)-1].append(kk)
                 connected_arr[kk].append(len(stacked_arr)-1)
     return connected_arr
 
