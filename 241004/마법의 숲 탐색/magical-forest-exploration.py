@@ -7,16 +7,13 @@ for _ in range(k):
 import queue
 dx= [0, 1, 0, -1]
 dy= [-1, 0, 1, 0]
-stacked_arr, exit_arr, connected_arr = [], [], []
+A = [[0]*(c) for _ in range(r+3)]
+exit_map = [[0]*(c) for _ in range(r+3)]
+
 def occupied(x,y):
-    global stacked_arr
-    if not len(stacked_arr):
-        return False
-    for stacked in stacked_arr: # [x, y]가 stacked된 arr와 겹치는지 확인
-        for i in range(4):
-            if [x, y] == [stacked[0]+dx[i], stacked[1]+dy[i]]:
-                return True
-    return False
+    if not A[y][x]:
+            return False
+    return True
 
 def down(x, y):
     if occupied(x-1,y+1) or occupied(x, y+2) or occupied(x+1,y+1):
@@ -30,49 +27,36 @@ def right(x,y):
     if occupied(x+2,y) or occupied(x+1, y+1) or occupied(x+1,y-1):
         return False
     return True
-
-def get_connected_arr(stacked_arr, connected_arr):
-    def connected(x,y,d, tar_x, tar_y):
-        global dx, dy
-        nx, ny = x+dx[d], y+dy[d]
-        ddx=[0,1,2,1,0,-1,-2,-1]
-        ddy=[-2,-1,0,1,2,1,0,-1]
-        for idx in range(8):
-            if tar_x+ddx[idx]== nx and  tar_y+ddy[idx]==ny:
-                return True
-        return False
-    for kk in range(len(stacked_arr)-1):
-            if connected(stacked_arr[-1][0],stacked_arr[-1][1],exit_arr[-1],stacked_arr[kk][0],stacked_arr[kk][1]):
-                connected_arr[len(stacked_arr)-1].append(kk)
-                connected_arr[kk].append(len(stacked_arr)-1)
-    return connected_arr
-
-def score_cal(connected_arr): # bfs
-    connected_arr = get_connected_arr(stacked_arr, connected_arr)
-    max_y = 0
-    visited_arr =[0] * len(stacked_arr)
-    q = queue.Queue()
-    start = len(stacked_arr)-1
-    q.put(start)
-    visited_arr[start] = 1
-    if max_y < stacked_arr[start][1]:
-        max_y = stacked_arr[start][1]
-    while not q.empty():
-        now = q.get()
-        for next_ in connected_arr[now]:
-            if not visited_arr[next_]:
-                visited_arr[next_] = 1
-                q.put(next_)
-                if max_y < stacked_arr[next_][1]:
-                    max_y = stacked_arr[next_][1]
+def inRange(x,y):
+    if 0<=x<c and 3<=y<r+3:
+        return True
+    else: False
+from collections import deque
+def score_cal(x,y): # bfs
+    max_y = y
+    visited_arr =[[False]*(c) for _ in range(r+3)]
+    q = deque([(x,y)])
+    visited_arr[y][x] = True
+    while q:
+        now_x, now_y = q.popleft()
+        for j in range(4):
+            nx, ny = now_x+dx[j], now_y+dy[j]
+            if inRange(nx,ny):
+                if not visited_arr[ny][nx] and ((A[ny][nx] == A[now_y][now_x]) or (exit_map[now_y][now_x] and A[ny][nx]!=0)):
+                    q.append([nx,ny])
+                    visited_arr[ny][nx] = True
+                    if max_y < ny:
+                        max_y = ny
     return max_y
-
-def block_move(c_, d):
-    score = 0 
-    global stacked_arr, exit_arr,connected_arr
+def reset_map():
+    for i in range(r+3):
+        for j in range(c):
+            A[i][j] = 0
+            exit_map[i][j] = 0
+def block_move(c_, d, k):
     # check whether move down
     y = 0
-    while y<=r-1:
+    while y<=r:
         if down(c_, y):
             y +=1
         elif c_>1 and left(c_,y) and down(c_-1, y):
@@ -84,19 +68,23 @@ def block_move(c_, d):
             y+=1
             d = (d+1)%4
         else: break
-    if y >=3:
-        stacked_arr.append([c_,y])
-        exit_arr.append(d)
-        connected_arr.append([len(stacked_arr)-1])
-        if len(stacked_arr) == 1:
-            score = r
-        else: score = score_cal(connected_arr)
+    if y >=4:
+        A[y][c_] = k
+        A[y][c_-1] = k
+        A[y+1][c_] = k
+        A[y-1][c_]= k
+        A[y][c_+1] = k
+        exit_map[y+dy[d]][c_+dx[d]] = 1
+        score_ = score_cal(c_,y)-2
     else:
-        score = 0 
-        stacked_arr, exit_arr,connected_arr = [], [], []
-    return score
+        score_ = 0 
+        reset_map()
+    return score_
 
 score = 0
+def print_mat(graph):
+    for i in range(len(graph)):
+        print(graph[i])
 for kk in range(k):
-    score += block_move(arr[kk][0]-1,arr[kk][1])  
+    score += block_move(arr[kk][0]-1,arr[kk][1],kk+1)  
 print(score)
