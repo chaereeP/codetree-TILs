@@ -1,11 +1,11 @@
 # input
-# r, c, k = map(int, input().split())
-# arr = list()
-# for _ in range(k):
-#     arr.append(list(map(int, input().split())))
-r, c, k= 6, 5, 11
+r, c, k = map(int, input().split())
+arr = list()
+for _ in range(k):
+    arr.append(list(map(int, input().split())))
+# r, c, k= 6, 5, 11
 
-arr =[[2, 2],[2, 0],[3, 2],[3, 3],[3, 3],[2, 3],[4, 3],[4, 3],[4, 1],[2, 3],[2, 3]]
+# arr =[[2, 2],[2, 0],[3, 2],[3, 3],[3, 3],[2, 3],[4, 3],[4, 3],[4, 1],[2, 3],[2, 3]]
 import queue
 
 dx= [0, 1, 0, -1]
@@ -105,7 +105,7 @@ def block_move(c_, d):
 score = 0
 for kk in range(k):
     score += block_move(arr[kk][0]-1,arr[kk][1])
-    print(score)
-    print(exit_arr)
+    # print(score)
+    # print(exit_arr)
     
 print(score)
