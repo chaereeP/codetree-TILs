@@ -1,10 +1,10 @@
 # input
-# r, c, k = map(int, input().split())
-# arr = list()
-# for _ in range(k):
-#     arr.append(list(map(int, input().split())))
-r, c, k= 7, 9, 6
-arr = [ [4, 1],[5, 1],[2 ,1],[8, 1],[2, 2],[6,0]]
+r, c, k = map(int, input().split())
+arr = list()
+for _ in range(k):
+    arr.append(list(map(int, input().split())))
+# r, c, k= 7, 9, 6
+# arr = [ [4, 1],[5, 1],[2 ,1],[8, 1],[2, 2],[6,0]]
 
 dx= [0, 1, 0, -1]
 dy= [-1, 0, 1, 0]
