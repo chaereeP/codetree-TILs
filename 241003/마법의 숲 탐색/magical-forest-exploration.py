@@ -3,8 +3,9 @@ r, c, k = map(int, input().split())
 arr = list()
 for _ in range(k):
     arr.append(list(map(int, input().split())))
-# r, c, k= 7, 9, 6
-# arr = [ [4, 1],[5, 1],[2 ,1],[8, 1],[2, 2],[6,0]]
+
+# r, c, k= 8, 6, 8
+# arr = [[4, 0],[3, 0],[4, 1],[4, 3],[4, 0],[3, 1],[5, 0],[5, 0]]
 
 dx= [0, 1, 0, -1]
 dy= [-1, 0, 1, 0]
@@ -84,20 +85,18 @@ def block_move(c_, d):
     while y<=r-1:
         if down(c_, y):
             y +=1
-        elif c_>1 and left(c_,y):
-            if down(c_-1, y):
-                c_ -=1
-                y +=1
-                d = (d+3)%4
-            else: break
-        elif c_< c-2 and right(c_,y):
-            if down(c_+1, y):
-                c_ +=1
-                y+=1
-                d = (d+1)%4
-            else: break
+        elif c_>1 and left(c_,y) and down(c_-1, y):
+            print('l')
+            c_ -=1
+            y +=1
+            d = (d+3)%4
+        elif c_< c-2 and right(c_,y) and down(c_+1, y):
+            print('r')
+            c_ +=1
+            y+=1
+            d = (d+1)%4
         else: break
-    if y >=2:
+    if y >=3:
         stacked_arr.append([c_,y])
         exit_arr.append(d)
         if len(stacked_arr) == 1:
@@ -112,4 +111,5 @@ def block_move(c_, d):
 score = 0
 for kk in range(k):
     score += block_move(arr[kk][0]-1,arr[kk][1])
+    print(score)
 print(score)
