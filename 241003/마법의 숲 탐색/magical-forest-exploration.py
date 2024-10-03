@@ -1,8 +1,10 @@
 # input
-r, c, k = map(int, input().split())
-arr = list()
-for _ in range(k):
-    arr.append(list(map(int, input().split())))
+# r, c, k = map(int, input().split())
+# arr = list()
+# for _ in range(k):
+#     arr.append(list(map(int, input().split())))
+r, c, k= 7, 9, 6
+arr = [ [4, 1],[5, 1],[2 ,1],[8, 1],[2, 2],[6,0]]
 
 dx= [0, 1, 0, -1]
 dy= [-1, 0, 1, 0]
@@ -89,8 +91,9 @@ def block_move(c_, d):
                 d = (d+3)%4
             else: break
         elif c_< c-2 and right(c_,y):
-            if down(c_-1, y):
+            if down(c_+1, y):
                 c_ +=1
+                y+=1
                 d = (d+1)%4
             else: break
         else: break
