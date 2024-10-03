@@ -86,12 +86,10 @@ def block_move(c_, d):
         if down(c_, y):
             y +=1
         elif c_>1 and left(c_,y) and down(c_-1, y):
-            print('l')
             c_ -=1
             y +=1
             d = (d+3)%4
         elif c_< c-2 and right(c_,y) and down(c_+1, y):
-            print('r')
             c_ +=1
             y+=1
             d = (d+1)%4
