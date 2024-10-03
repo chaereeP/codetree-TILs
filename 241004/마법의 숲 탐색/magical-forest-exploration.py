@@ -3,11 +3,8 @@ r, c, k = map(int, input().split())
 arr = list()
 for _ in range(k):
     arr.append(list(map(int, input().split())))
-# r, c, k= 6, 5, 11
 
-# arr =[[2, 2],[2, 0],[3, 2],[3, 3],[3, 3],[2, 3],[4, 3],[4, 3],[4, 1],[2, 3],[2, 3]]
 import queue
-
 dx= [0, 1, 0, -1]
 dy= [-1, 0, 1, 0]
 stacked_arr, exit_arr, connected_arr = [], [], []
@@ -21,7 +18,7 @@ def occupied(x,y):
                 return True
     return False
 
-def down( x, y):
+def down(x, y):
     if occupied(x-1,y+1) or occupied(x, y+2) or occupied(x+1,y+1):
         return False
     return True
@@ -47,6 +44,7 @@ def get_connected_arr(stacked_arr, connected_arr):
     for kk in range(len(stacked_arr)-1):
             if connected(stacked_arr[-1][0],stacked_arr[-1][1],exit_arr[-1],stacked_arr[kk][0],stacked_arr[kk][1]):
                 connected_arr[-1].append(kk)
+                connected_arr[kk].append(len(stacked_arr)-1)
     return connected_arr
 
 def score_cal(connected_arr): # bfs
@@ -93,7 +91,6 @@ def block_move(c_, d):
         if len(stacked_arr) == 1:
             score = r
         else: score = score_cal(connected_arr)
-
     else:
         score = 0 
         stacked_arr, exit_arr,connected_arr = [], [], []
@@ -101,8 +98,5 @@ def block_move(c_, d):
 
 score = 0
 for kk in range(k):
-    score += block_move(arr[kk][0]-1,arr[kk][1])
-    # print(score)
-    # print(exit_arr)
-    
+    score += block_move(arr[kk][0]-1,arr[kk][1])  
 print(score)
