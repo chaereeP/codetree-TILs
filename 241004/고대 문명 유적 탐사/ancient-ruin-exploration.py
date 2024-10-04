@@ -83,4 +83,4 @@ for _ in range(k):
         if new_score == 0:
             break
         max_score += new_score
-    print(max_score)
+    print(max_score,end=' ')
