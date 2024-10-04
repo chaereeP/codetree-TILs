@@ -67,8 +67,8 @@ for _ in range(k):
     max_score = 0
     max_graph = 0
     for nu in range(1,4):
-        for i in range(1,4):
-            for j in range(1,4):
+        for j in range(1,4):
+            for i in range(1,4):
                 rotated_graph = rot_graph(graph, [j,i], 90*nu)
                 cur_score, tmp_graph = score_cal(rotated_graph)
                 if (cur_score > max_score):
