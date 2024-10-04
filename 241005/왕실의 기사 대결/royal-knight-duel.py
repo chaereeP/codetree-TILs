@@ -36,8 +36,10 @@ def inRange(x,y):
 def can_move(ci, d, knights_):
     r,c,h,w,_, _ = knights_[ci-1]
     if d ==0:
+        if not in Range(r-1-1,c-1+w-1):
+            return False
         for ii in range(w):
-            if not inRange(r-1-1,c-1+ii) or A[r-1-1][c-1+ii] == 2:
+            if A[r-1-1][c-1+ii] == 2:
                 return False
     if d ==1:
         for ii in range(h):
@@ -69,7 +71,7 @@ def cal_damage(moved, knight_map_, knights_):
 # move
 for i in range(len(knights)):
     update_map(i, knight_map, knights)
-    
+
 for or_idx in range(len(order_arr)):
     i, d = order_arr[or_idx]
     # check whether knight alive
@@ -106,5 +108,4 @@ score = 0
 for i in range(len(knights)):
     if knights[i][-1] > 0:
         score += (knights[i][-2]- knights[i][-1])
-# print_map(knight_map)
 print(score)
