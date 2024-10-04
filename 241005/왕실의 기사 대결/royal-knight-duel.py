@@ -32,7 +32,7 @@ def update_map(idx, knight_map_, knights_):
 
 def inRange(x,y):
     return 0<=x<l and 0<=y<l
-
+    
 def can_move(ci, d, knights_):
     r,c,h,w,_, _ = knights_[ci-1]
     if d ==0:
@@ -56,8 +56,8 @@ from collections import deque
 def cal_damage(moved, knight_map_, knights_):
     for i in range(l):
         for j in range(l):
-            if A[i][j] ==1 and knight_map_[i][j] in moved:
-                knights_[i-1][-1] -=1
+            if A[i][j] ==1 and knight_map_[i][j]!=0 and knight_map_[i][j] in moved:
+                knights_[knight_map_[i][j]-1][-1] -=1
     for ii in moved:
         i = ii-1
         if knights_[i][-1]<=0:
@@ -69,6 +69,7 @@ def cal_damage(moved, knight_map_, knights_):
 # move
 for i in range(len(knights)):
     update_map(i, knight_map, knights)
+    
 for or_idx in range(len(order_arr)):
     i, d = order_arr[or_idx]
     # check whether knight alive
