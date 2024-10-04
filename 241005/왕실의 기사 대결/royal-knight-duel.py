@@ -73,7 +73,6 @@ def cal_damage(moved, knight_map_, knights_):
 # move
 for i in range(len(knights)):
     update_map(i, knight_map, knights)
-
 for or_idx in range(len(order_arr)):
     i, d = order_arr[or_idx]
     # check whether knight alive
@@ -83,6 +82,8 @@ for or_idx in range(len(order_arr)):
         que = deque(([i]))
         sw = 1
         moved_arr = []
+        visited = [0]*len(knights)
+        visited[i-1] = True
         while que and sw:
             cur_i = que.popleft()
             if can_move(cur_i,d, tmp_knights):
@@ -92,11 +93,14 @@ for or_idx in range(len(order_arr)):
                 collapsed, tmp_knight_map = update_map(cur_i-1, tmp_knight_map,tmp_knights)
                 while collapsed:
                     t=collapsed.pop()
-                    que.append(t)
-                    moved_arr.append(t)
+                    if not visited[t-1]:
+                        que.append(t)
+                        visited[t-1] = True
+                        moved_arr.append(t)
             else: 
                 sw = 0
         if sw :
+            # print('mo',moved_arr)
             cal_damage(moved_arr, tmp_knight_map, tmp_knights)
             knight_map, knights = tmp_knight_map, tmp_knights
 
@@ -105,4 +109,5 @@ score = 0
 for i in range(len(knights)):
     if knights[i][-1] > 0:
         score += (knights[i][-2]- knights[i][-1])
+# print_map(knight_map)
 print(score)
