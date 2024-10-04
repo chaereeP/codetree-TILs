@@ -81,20 +81,16 @@ for or_idx in range(len(order_arr)):
         que = deque(([i]))
         sw = 1
         moved_arr = []
-        visited = [0]*len(knights)
-        visited[i-1] = True
         while que and sw:
             cur_i = que.popleft()
             if can_move(cur_i,d, tmp_knights):
-                # print(cur_i,can_move(cur_i,d, tmp_knights), tmp_knights)
                 tmp_knights[cur_i-1][0] += dy[d]
                 tmp_knights[cur_i-1][1] += dx[d]
                 collapsed, tmp_knight_map = update_map(cur_i-1, tmp_knight_map,tmp_knights)
                 while collapsed:
                     t=collapsed.pop()
-                    if not visited[t-1]:
+                    if t-1 not in moved_arr and t!=i:
                         que.append(t)
-                        visited[t-1] = True
                         moved_arr.append(t)
             else: 
                 sw = 0
