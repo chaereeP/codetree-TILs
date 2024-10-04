@@ -89,7 +89,7 @@ for or_idx in range(len(order_arr)):
                 collapsed, tmp_knight_map = update_map(cur_i-1, tmp_knight_map,tmp_knights)
                 while collapsed:
                     t=collapsed.pop()
-                    if t-1 not in moved_arr and t!=i:
+                    if t not in moved_arr and t!=i:
                         que.append(t)
                         moved_arr.append(t)
             else: 
