@@ -57,7 +57,7 @@ def cal_damage(moved, knight_map_, knights_):
     for i in range(l):
         for j in range(l):
             if A[i][j] ==1 and knight_map_[i][j] in moved:
-                knights_[i][-1] -=1
+                knights_[i-1][-1] -=1
     for ii in moved:
         i = ii-1
         if knights_[i][-1]<=0:
