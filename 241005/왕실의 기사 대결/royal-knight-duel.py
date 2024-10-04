@@ -36,7 +36,7 @@ def inRange(x,y):
 def can_move(ci, d, knights_):
     r,c,h,w,_, _ = knights_[ci-1]
     if d ==0:
-        if not in Range(r-1-1,c-1+w-1):
+        if not inRange(r-1-1,c-1+w-1):
             return False
         for ii in range(w):
             if A[r-1-1][c-1+ii] == 2:
