@@ -12,6 +12,7 @@ for _ in range(q):
     order_arr.append(list(map(int, input().split())))
 dx = [0,1,0,-1]
 dy = [-1,0, 1, 0]
+
 # draw initial map
 import copy
 def update_map(idx, knight_map_, knights_):
@@ -21,7 +22,7 @@ def update_map(idx, knight_map_, knights_):
         for j in range(l):
             if knight_map_[i][j] == num+1:
                 knight_map_[i][j]=0
-    r,c,h,w,k, c_k = knights_[num]
+    r,c,h,w,k,c_k = knights_[num]
     for hi in range(h):
         for wi in range(w):
             if knight_map_[hi + r-1][wi + c-1]!=0:
@@ -29,11 +30,9 @@ def update_map(idx, knight_map_, knights_):
             knight_map_[hi + r-1][wi + c-1] = num+1
     return collapsed, knight_map_
 
-def print_map(graph):
-    for i in range(len(graph)):
-        print(graph[i])
 def inRange(x,y):
     return 0<=x<l and 0<=y<l
+
 def can_move(ci, d, knights_):
     r,c,h,w,_, _ = knights_[ci-1]
     if d ==0:
@@ -55,15 +54,12 @@ def can_move(ci, d, knights_):
     return True   
 from collections import deque
 def cal_damage(moved, knight_map_, knights_):
-    arr= [0] * len(knights_)
     for i in range(l):
         for j in range(l):
-            if A[i][j] ==1 and knight_map_[i][j]!=0:
-                arr [knight_map_[i][j]-1]+=1
-    # for i in range(len(knights_)):
+            if A[i][j] ==1 and knight_map_[i][j] in moved:
+                knights_[i][-1] -=1
     for ii in moved:
         i = ii-1
-        knights_[i][-1] = knights_[i][-1] - arr[i]
         if knights_[i][-1]<=0:
             r,c,h,w,_, _ = knights_[i]
             for hi in range(h):
